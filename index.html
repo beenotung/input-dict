@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>倉頡碼字典</title>
+  </head>
+  <body>
+    <script>
+      document.loadstatus = { chinesedata: { checked: false } }
+      document.writeln('<p>loading dictionary...</p>')
+    </script>
+    <script src="https://ipfs.io/ipfs/QmPRs7P5cH4bw7aqF6cGwVYEggRRUumGQ4Fd2JxjF2GbRA/index_files/codecangjie.js"></script>
+    <script>
+      let codeName = {
+        a: '日',
+        b: '月',
+        c: '金',
+        d: '木',
+        e: '水',
+        f: '火',
+        g: '土',
+        h: '竹',
+        i: '戈',
+        j: '十',
+        k: '大',
+        l: '中',
+        m: '一',
+        n: '弓',
+        o: '人',
+        p: '心',
+        q: '手',
+        r: '口',
+        s: '尸',
+        t: '廿',
+        u: '山',
+        v: '女',
+        w: '田',
+        x: '難',
+        y: '卜',
+        z: '重',
+      }
+      let dict = {}
+      Code.split(',').forEach(part => {
+        let words = part.split(' ')
+        let code = words[0]
+          .split('')
+          .map(char => codeName[char] || char)
+          .join('')
+        for (let i = 1; i < words.length; i++) {
+          let word = words[i]
+          dict[word] = code
+        }
+      })
+      document.writeln('<p>ready</p>')
+    </script>
+    <style>
+      #result_list {
+        display: inline-block;
+        margin: 0.5rem;
+      }
+      .result-item {
+        border: 1px solid #cccc55;
+        padding: 0.5rem;
+      }
+      .result-item .word::after {
+        content: ':';
+      }
+    </style>
+    <div id="root">
+      <form onsubmit="event.preventDefault();search()">
+        <input
+          id="word_input"
+          type="text"
+          placeholder="輸入要查詢的字"
+          oninput="search()"
+        />
+        <input type="submit" value="查詢輸入碼" />
+      </form>
+      <div id="result_list">
+        <div class="result-item">
+          <span class="word">乎</span>
+          <span class="code">竹火木</span>
+        </div>
+      </div>
+    </div>
+    <script>
+      let itemTemplate = result_list.querySelector('.result-item')
+      function search() {
+        result_list.innerHTML = ''
+        for (let word of word_input.value) {
+          if (!word.trim()) continue
+          if (word.charCodeAt(0) < 256) continue
+          let node = itemTemplate.cloneNode(true)
+          node.querySelector('.word').textContent = word
+          let code = dict[word] || '?'
+          node.querySelector('.code').textContent = code
+          result_list.appendChild(node)
+        }
+      }
+      search()
+      document.querySelectorAll('body > p').forEach(p => {
+        p.remove()
+      })
+    </script>
+  </body>
+</html>
