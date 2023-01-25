@@ -60,7 +60,7 @@ async function main() {
     process.stdout.write(
       `\r total: ${count} | spped: ${speed.toFixed(
         2,
-      )} words/sec | estimate ${progress} | remind ${timeNeeded} sec`,
+      )} words/sec | estimate ${progress} | remind ${timeNeeded} sec   `,
     )
   }
   for (; count < 6000; ) {
