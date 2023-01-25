@@ -1,0 +1,5 @@
+word
+----
+id
+char text unique
+code text

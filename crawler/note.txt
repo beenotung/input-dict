@@ -1,0 +1,3 @@
+Todo:
+- to collect input explain from https://fcjonline.com/index.php/tc/dictionary
+- only collect the id-char mapping, hotlink the explain image from original website
