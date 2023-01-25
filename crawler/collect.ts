@@ -60,7 +60,7 @@ async function main() {
       )} words/sec | estimate ${progress} | remind ${timeNeeded} sec`,
     )
   }
-  for (;;) {
+  for (; count < 6000; ) {
     await loop()
   }
 }
