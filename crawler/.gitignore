@@ -5,3 +5,4 @@ db.sqlite3-wal
 node_modules
 pnpm-lock.yaml
 images.zip
+db.csv
