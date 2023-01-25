@@ -20,32 +20,35 @@ async function main() {
       let char = img.alt
       // example: assets/images/word/2843.png
       let src = img.src
-      let code = table.tBodies[0].rows[3].cells[1].textContent
-      return { char, src, code }
+      // let code = table.tBodies[0].rows[3].cells[1].textContent
+      return { char, src }
     })
-    let { char, src, code } = result
+    let { char, src } = result
     let id = +src.match(/(\d+)\.png/)?.[1]!
     if (!id) throw new Error('faild to parse word id')
-    if (!code) throw new Error('failed to parse input code')
+    // if (!code) throw new Error('failed to parse input code')
     if (hasWordById(id)) return
-    const arr = await page.evaluate(
-      ({ src }) => {
-        return fetch(src)
-          .then(res => res.arrayBuffer())
-          .then(bin => {
-            let arr = Array.from(new Uint8Array(bin))
-            return arr
-          })
-      },
-      { src },
-    )
-    let content = Buffer.from(arr)
-    let file = idToFile(id)
-    let tmpFile = file + '.tmp'
-    prepareDir(file)
-    await fs.writeFile(tmpFile, content)
-    await fs.rename(tmpFile, file)
-    storeWord(id, { char, code })
+    async function downloadImage() {
+      const arr = await page.evaluate(
+        ({ src }) => {
+          return fetch(src)
+            .then(res => res.arrayBuffer())
+            .then(bin => {
+              let arr = Array.from(new Uint8Array(bin))
+              return arr
+            })
+        },
+        { src },
+      )
+      let content = Buffer.from(arr)
+      let file = idToFile(id)
+      let tmpFile = file + '.tmp'
+      prepareDir(file)
+      await fs.writeFile(tmpFile, content)
+      await fs.rename(tmpFile, file)
+    }
+    // await downloadImage()
+    storeWord(id, { char })
     count++
     if (id > maxId) maxId = id
     let time = Date.now() - startTime
