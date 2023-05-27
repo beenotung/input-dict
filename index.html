@@ -10,8 +10,24 @@
     <script>
       document.loadstatus = { chinesedata: { checked: false } }
       document.writeln('<p>loading dictionary...</p>')
+      var refSiteHash = 'QmP7SubhsNPggxdxEvh4PxcfKNoci8So5uCH53xSRf2ABQ'
+      var refPathname = '/index_files/codecangjie.js'
+      document.writeln(
+        '<script src="https://' +
+          refSiteHash +
+          '.surge.sh' +
+          refPathname +
+          '"><' +
+          '/script>',
+      )
+      document.writeln(
+        '<script src="https://ipfs.io/ipfs/' +
+          refSiteHash +
+          refPathname +
+          '" async defer><' +
+          '/script>',
+      )
     </script>
-    <script src="https://ipfs.io/ipfs/QmP7SubhsNPggxdxEvh4PxcfKNoci8So5uCH53xSRf2ABQ/index_files/codecangjie.js"></script>
     <script>
       let codeName = {
         a: '日',
