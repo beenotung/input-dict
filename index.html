@@ -79,6 +79,8 @@
       .result-item {
         border: 1px solid #cccc55;
         padding: 0.5rem;
+        display: block;
+        text-decoration: none;
       }
       .result-item .word::after {
         content: ':';
@@ -94,16 +96,22 @@
         />
         <input type="submit" value="查詢輸入碼" />
       </form>
+      <p id="hint" hidden>提示：點擊以查看輸入碼的視覺解釋</p>
       <div id="result_list">
-        <div class="result-item">
+        <a
+          class="result-item"
+          href="https://www.倉頡字典.com/list/char/乎"
+          target="_blank"
+        >
           <span class="word">乎</span>
           <span class="code">竹火木</span>
-        </div>
+        </a>
       </div>
     </div>
     <script>
       let itemTemplate = result_list.querySelector('.result-item')
       function search() {
+        hint.hidden = true
         result_list.innerHTML = ''
         for (let word of word_input.value) {
           if (!word.trim()) continue
@@ -112,7 +120,9 @@
           node.querySelector('.word').textContent = word
           let code = dict[word] || '?'
           node.querySelector('.code').textContent = code
+          node.href = 'https://www.倉頡字典.com/list/char/' + word
           result_list.appendChild(node)
+          hint.hidden = false
         }
       }
       search()
