@@ -101,6 +101,7 @@
         <a
           class="result-item"
           href="https://www.倉頡字典.com/list/char/乎"
+          href="https://www.hkcards.com/cj/cj-char-乎.html"
           target="_blank"
         >
           <span class="word">乎</span>
@@ -121,6 +122,7 @@
           let code = dict[word] || '?'
           node.querySelector('.code').textContent = code
           node.href = 'https://www.倉頡字典.com/list/char/' + word
+          node.href = 'https://www.hkcards.com/cj/cj-char-' + word + '.html'
           result_list.appendChild(node)
           hint.hidden = false
         }
